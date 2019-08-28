@@ -1,0 +1,464 @@
+
+
+<html>
+
+	<head>
+		<title>cytoscape-avsdf.js demo</title>
+
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+		<!--polyfills are needed for this extension for old browsers like IE -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.5.7/shim.min.js"></script>
+
+		<script src="https://unpkg.com/layout-base/layout-base.js"></script>
+		<script src="https://unpkg.com/avsdf-base/avsdf-base.js"></script>
+		<script src="this.js"></script>
+
+		<style>
+			body {
+				font-family: helvetica;
+				font-size: 15px;
+			}
+			#cy {
+				width: 100%;
+				height: 90%;
+				z-index: 999;
+			}
+			h1 {
+				opacity: 0.5;
+				font-size: 1em;
+				font-weight: bold;
+			}
+			button {
+				font-size: 15px;
+				margin-right: 10px;
+			}
+			.line {
+				clear:left;
+				height:25px;
+				margin-top:6px;
+				margin-right:6px;
+				margin-bottom:6px;
+			}
+			.radio {
+				margin-left:25px;
+			}
+		</style>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function(){
+
+				    var v1 = Math.floor(Math.random() * 101);
+					var v2 = Math.floor(Math.random() * 101);
+					let v3 = Math.floor(Math.random() * 101);
+					let v4 = Math.floor(Math.random() * 101);
+					let v5 = Math.floor(Math.random() * 101);
+					let v6 = Math.floor(Math.random() * 101);
+					let v7 = Math.floor(Math.random() * 101);
+				var cy = window.cy = cytoscape({
+					
+					container: document.getElementById('cy'),
+					layout: {
+						name: 'avsdf',
+						nodeSeparation: 120
+					},
+					style: [
+						{
+							selector: 'node',
+							style: {
+								'label': 'data(id)',
+								'text-valign': 'center',
+								'color': '#000000',
+								'background-color': '#fff'
+							}
+						},
+						{
+							selector: 'edge',
+							style: {
+								'width': 2,
+								'line-color': '#000',
+								'line-style': 'dashed'
+						}
+						}
+					],
+
+					elements: {
+						nodes: [
+							{ data: { id: v1, weight: 1} },
+							{ data: { id: v2, weight: 2} },
+							{ data: { id: v3, weight: 3} },
+							{ data: { id: v4, weight: 4} },
+							{ data: { id: v5, weight: 5} },
+							{ data: { id: v6, weight: 6} },
+							{ data: { id: v7, weight: 7} }  
+						],
+						edges: [
+					
+						]
+					}
+				});
+				document.getElementById("layoutButton").addEventListener("click", function(){
+		
+				     v1 = 0;
+					 v2 = 0;
+					 v3 = 0;
+					 v4 = 0;
+					 v5 = 0;
+					 v6 = 0;
+					 v7 = 0;
+/*
+                    
+					if(document.getElementById("end").checked) {
+						var layout = cy.layout({
+							name: 'avsdf',
+							animate: "end",
+							animationDuration: 1000,
+							animationEasing: 'ease-in-out',
+							nodeSeparation: 120
+						});
+					} else{
+						var layout = cy.layout({
+							name: 'avsdf',
+							refresh: 1,
+							animate: "during",
+							animationDuration: 1000,
+							animationEasing: 'ease-in-out',
+							nodeSeparation: 120
+						});
+					}
+					layout.run(); */
+				});
+
+				
+				document.getElementById("randomize").addEventListener("click", function(){
+					var sigma = 5;
+                    var delta = -3;
+                    
+                    /******************** FITNESS - HEIRATSSCHEMA - MUTATION *****************/
+                    
+                     /********************         TEIL 1: SCORING           *****************/
+
+
+                    //  to first node
+                    if(Math.abs(v1-v2)<sigma){	
+	                   v1  = Math.floor((+v1 + +v2)/2 + Math.floor((Math.random() * 10) + delta));
+                       v2  = Math.floor((+v1 + +v2)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+                    else{
+                       v1  = v1 + Math.floor((Math.random() * 10) + delta);
+                       v2  = v2 + Math.floor((Math.random() * 10) + delta);
+                    }
+
+                    if(Math.abs(v1-v3)<sigma){	
+                        v1  = Math.floor((+v1 + +v3)/2 + Math.floor((Math.random() * 10) + delta));
+                        v3  = Math.floor((+v1 + +v3)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+                    else{
+                       v1  = v1 + Math.floor((Math.random() * 10) + delta);
+                       v3  = v2 + Math.floor((Math.random() * 10) + delta);
+                    }
+
+
+                    if(Math.abs(v1-v4)<sigma){	
+                        v1  = Math.floor((+v1 + +v4)/2 + Math.floor((Math.random() * 10) + delta));
+                        v4  = Math.floor((+v1 + +v4)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+                    else{
+                       v1  = v1 + Math.floor((Math.random() * 10) + delta);
+                       v4  = v2 + Math.floor((Math.random() * 10) + delta);
+                    }
+
+
+                    if(Math.abs(v1-v5)<sigma){	
+                        v1  = Math.floor((+v1 + +v5)/2 + Math.floor((Math.random() * 10) + delta));
+                        v5  = Math.floor((+v1 + +v5)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+                      else{
+                       v1  = v1 + Math.floor((Math.random() * 10) + delta);
+                       v5  = v5 + Math.floor((Math.random() * 10) + delta);
+                    }
+
+
+                    if(Math.abs(v1-v6)<sigma){	
+                        v1  = Math.floor((+v1 + +v6)/2 + Math.floor((Math.random() * 10) + delta));
+                        v6  = Math.floor((+v1 + +v6)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+                       else{
+                       v1  = v1 + Math.floor((Math.random() * 10) + delta);
+                       v6  = v6 + Math.floor((Math.random() * 10) + delta);
+                    }
+
+                    if(Math.abs(v1-v7)<sigma){	
+                        v1  = Math.floor((+v1 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                        v7  = Math.floor((+v1 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+                      else{
+                       v1  = v1 + Math.floor((Math.random() * 10) + delta);
+                       v7  = v7 + Math.floor((Math.random() * 10) + delta);
+                    }
+                    // Connection to second node
+                    if(Math.abs(v2-v3)<sigma){	
+                        v2  = Math.floor((+v2 + +v3)/2 + Math.floor((Math.random() * 10) + delta));
+                        v3  = Math.floor((+v2 + +v3)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+                     else{
+                       v1  = v1 + Math.floor((Math.random() * 10) + delta);
+                       v7  = v7 + Math.floor((Math.random() * 10) + delta);
+                    }   // Not Clever
+  
+                    if(Math.abs(v2-v4)<sigma){	
+                        v2  = Math.floor((+v2 + +v4)/2 + Math.floor((Math.random() * 10) + delta));
+                        v4  = Math.floor((+v2 + +v4)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+
+                    if(Math.abs(v2-v5)<sigma){	
+                        v2  = Math.floor((+v2 + +v5)/2 + Math.floor((Math.random() * 10) + delta));
+                        v5  = Math.floor((+v2 + +v5)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+
+                    if(Math.abs(v2-v6)<sigma){	
+                        v2  = Math.floor((+v2 + +v6)/2 + Math.floor((Math.random() * 10) + delta));
+                        v6  = Math.floor((+v2 + +v6)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+
+                    if(Math.abs(v2-v7)<sigma){	
+                        v2  = Math.floor((+v2 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                        v7  = Math.floor((+v2 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                    }    
+                     //  to third node
+                    if(Math.abs(v3-v4)<sigma){	
+                        v3  = Math.floor((+v3 + +v4)/2 + Math.floor((Math.random() * 10) + delta));
+                        v4  = Math.floor((+v3 + +v4)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+
+                    if(Math.abs(v3-v5)<sigma){	
+                        v3  = Math.floor((+v3 + +v5)/2 + Math.floor((Math.random() * 10) + delta));
+                        v5  = Math.floor((+v3 + +v5)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+
+                    if(Math.abs(v3-v6)<sigma){	
+                        v3  = Math.floor((+v3 + +v6)/2 + Math.floor((Math.random() * 10) + delta));
+                        v6  = Math.floor((+v3 + +v6)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+
+                    if(Math.abs(v3-v7)<sigma){	
+                        v3  = Math.floor((+v3 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                        v7  = Math.floor((+v3 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                    } 
+                       //  to 4. node
+                    if(Math.abs(v4-v5)<sigma){	
+                        v4  = Math.floor((+v4 + +v5)/2 + Math.floor((Math.random() * 10) + delta));
+                        v5  = Math.floor((+v4 + +v5)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+
+                    if(Math.abs(v4-v6)<sigma){	
+                        v4  = Math.floor((+v4 + +v6)/2 + Math.floor((Math.random() * 10) + delta));
+                        v6  = Math.floor((+v4 + +v6)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+
+                    if(Math.abs(v4-v7)<sigma){	
+                        v4  = Math.floor((+v4 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                        v7  = Math.floor((+v4 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                    }  
+                    //  to 5. node
+
+                    if(Math.abs(v5-v6)<sigma){	
+                        v5  = Math.floor((+v5 + +v6)/2 + Math.floor((Math.random() * 10) + delta));
+                        v6  = Math.floor((+v5 + +v6)/2 + Math.floor((Math.random() * 10) + delta));
+                    }
+
+                    if(Math.abs(v5-v7)<sigma){	
+                        v5  = Math.floor((+v5 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                        v7  = Math.floor((+v5 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                    } 
+                    //  to 6. node
+
+                    if(Math.abs(v6-v7)<sigma){	
+                        v6  = Math.floor((+v6 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                        v7  = Math.floor((+v6 + +v7)/2 + Math.floor((Math.random() * 10) + delta));
+                    } 
+
+
+                    console.log(Math.floor((Math.random() * 10) + delta));
+					//v1  = (+v1 + +v2)/2;
+					
+					cy.nodes().forEach(function(ele){
+						ele.data().weight = Math.floor((Math.random() * 10) + 1);
+						cy.elements().remove();
+						//cy.remove( v1 );	
+						var sigma = 15;
+						//console.log('v1: ' + typeof v1 + ' ' +v1);
+						//v1 = vt;
+						//num.toString(v1);
+
+                    var eles = cy.add([
+                      { group: 'nodes', data: { id: v1 } },
+                      { group: 'nodes', data: { id: v2 } },
+                      { group: 'nodes', data: { id: v3 } },
+                      { group: 'nodes', data: { id: v4 } },
+                      { group: 'nodes', data: { id: v5 } },
+                      { group: 'nodes', data: { id: v6 } },
+                      { group: 'nodes', data: { id: v7 }},
+                    ]);
+                        
+				     /******************** FITNESS - HEIRATSSCHEMA - MUTATION *****************/
+                    
+                     /********************         TEIL 2: Kanten           *****************/
+                        
+                    // Connection to first node
+                    if(Math.abs(v1-v2)<sigma){	
+                        var eles = cy.add([ 
+                            { group: 'edges', data: { id: 'e0', source: v1, target: v2, directed: 'true'} }
+                            ]);
+                    }
+
+                    if(Math.abs(v1-v3)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e2', source: v1, target: v3 } }
+                                ]);
+                    }
+
+                    if(Math.abs(v1-v4)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e3', source: v1, target: v4 } }
+
+                    ]);}
+
+                    if(Math.abs(v1-v5)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e4', source: v1, target: v5 } }
+
+                    ]);}
+
+                    if(Math.abs(v1-v6)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e5', source: v1, target: v6 } }
+
+                    ]);}
+
+
+                    if(Math.abs(v1-v7)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e6', source: v1, target: v7 } }
+
+                    ]);}
+
+                    // Connection to second node
+                    if(Math.abs(v2-v3)<sigma){	
+                        var eles = cy.add([ 
+                            { group: 'edges', data: { id: 'e20', source: v2, target: v3 } }
+                            ]);
+                    }
+
+                    if(Math.abs(v2-v4)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e22', source: v2, target: v4 } }
+
+                    ]);}
+
+                    if(Math.abs(v2-v5)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e23', source: v2, target: v5 } }
+
+                    ]);}
+
+                    if(Math.abs(v2-v6)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e24', source: v2, target: v6 } }
+
+                    ]);}
+
+                    if(Math.abs(v2-v7)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e25', source: v2, target: v7 } }
+
+                    ]);} 
+
+                    // Connection to third node 
+
+
+                    if(Math.abs(v3-v4)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e32', source: v3, target: v4 } }
+
+                    ]);}
+
+                    if(Math.abs(v3-v5)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e33', source: v3, target: v5 } }
+
+                    ]);}
+
+                    if(Math.abs(v3-v6)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e34', source: v3, target: v6 } }
+
+                    ]);}
+
+                    if(Math.abs(v3-v7)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e35', source: v3, target: v7 } }
+
+                    ]);}
+
+
+                    // Connection to forth node
+
+                    if(Math.abs(v4-v5)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e43', source: v4, target: v5 } }
+
+                    ]);}
+
+                    if(Math.abs(v4-v6)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e44', source: v4, target: v6 } }
+
+                    ]);}
+
+                    if(Math.abs(v4-v7)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e45', source: v4, target: v7 } }
+
+                    ]);}
+
+                    // Connection to fith node
+
+                    if(Math.abs(v5-v6)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e54', source: v5, target: v6 } }
+
+                    ]);}
+
+                    if(Math.abs(v5-v7)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e55', source: v5, target: v7 } }
+
+                    ]);}
+
+                    // Connection to sixth node
+
+
+                    if(Math.abs(v6-v7)<sigma)
+                                {	var eles = cy.add([ { group: 'edges', data: { id: 'e65', source: v6, target: v7 } }
+
+                    ]);}
+
+                    console.log(' v1: ' + v1 + ' v2: ' + v2 + ' v3: ' + v3 + ' v4: ' + v4 + ' v5: ' + v5 + ' v6: ' + v6 + ' v7: ' + v7);
+
+});
+					var layout = cy.layout({
+						name: 'circle',
+						animate: false,
+						sort: function(a, b){ return a.data('weight') - b.data('weight') },
+						radius: 120,
+						animationDuration: 1000,
+						animationEasing: 'ease-in-out'
+					});
+					layout.run();
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<h1>Graph Based Genetic Algorithm</h1>
+		<div class="line">
+		</div>
+		<a data-toggle="tooltip" data-placement="auto" title="Places the nodes circularly as a randomly permuted sequence">
+			<button id="randomize" type="button">Next</button>
+		</a>
+		<a data-toggle="tooltip" data-placement="auto" title="Places the nodes circularly with respect to AVSDF layout">
+		<button id="layoutButton" type="button">Set scoring to '0'</button>
+            <input type="button" value="Restart" onClick="document.location.reload(true)">
+		</a>
+
+		<div id="cy"></div>
+
+	</body>
+
+</html>
